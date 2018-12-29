@@ -10,7 +10,7 @@ In the Unity-Project, I use the PerfectPixel Camera-Script by GG EZ (from the As
 
 # How to use the Rural Farm Tiles
 
-Attention! Add your Rural Farm Tile Sprites into Assets > SchmiddiInTheGame > Images > Rural Farm Tiles!
+Attention! Add your Rural Farm Tiles Sprites into Assets > SchmiddiInTheGame > Images > Rural Farm Tiles!
 
 **After that, you need to slice the Sprites**
 
