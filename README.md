@@ -12,7 +12,7 @@ In the Unity-Project, I use the PerfectPixel Camera-Script by GG EZ (from the As
 
 Attention! You can add your Rural Farm Tile Sprites into Assets > SchmiddiInTheGame > Images > Rural Farm Tiles!
 
-**But you need to slice the Sprites first**
+**After that, you need to slice the Sprites**
 
 In Unity select Image (for Example TileA1), then set Sprite-Mode in Inspector to *multiple* and set 16 pixels per unit for (TileA1-A5_2_16x16), 32 pixels per unit for the others. Set also Filter Mode to *No Point (no filter)* and Compression to *none*.
 
