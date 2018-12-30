@@ -8,15 +8,61 @@ using System.Collections;
 /// </summary>
 public class TheGameObject : MonoBehaviour
 {
-    // Use this for initialization
-    void Start()
-    {
+    /// <summary>
+    /// Größe eines PixelArt-Pixels in Unity-Einheiten.
+    /// </summary>
+    private static float pixelFrac = 1f / 32f; //32 = Pixels per Unit
 
+    /// <summary>
+    /// Runde auf PixelArt-Pixel.
+    /// </summary>
+    /// <param name="f">Zahl, die gerundet werden soll.</param>
+    /// <returns>f, eingerastet im PixelArt-Raster.</returns>
+    protected float roundToPixelGrid(float f)
+    {
+        return Mathf.Ceil(f / pixelFrac) * pixelFrac;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    /// <summary>
+    /// Zeiger auf den Box-Collider für die Kollisionserkennung
+    /// mittels isColliding, um die Suchfunktion (getComponent) einzusparen.
+    /// </summary>
+    private BoxCollider2D boxCollider;
+    /// <summary>
+    /// Ergebnis-Zwischenspeicher für die Kollisionserkennung
+    /// mittels isColliding.
+    /// </summary>
+    private Collider2D[] colliders;
 
+    private void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+        colliders = new Collider2D[10];
+    }
+
+    /// <summary>
+    /// Prüft, ob eine Kollision zwischen dem BoxColider2D dieses Spielobjekts
+    /// und anderen 2D-Kollidern stattfindet.
+    /// </summary>
+    /// <returns><c>true</c>, bei Kollision, <c>false</c> sonst.</returns>
+    protected bool isColliding()
+    {
+        return boxCollider.OverlapCollider(new ContactFilter2D(), colliders) > 0;
+    }
+
+    /// <summary>
+    /// Bewegung, die die Figur in diesem Frame vollziehen soll.
+    /// moveSpeed = nach rechts/oben, -moveSpeed = nach links/unten
+    /// </summary>
+    public Vector3 change = new Vector3();
+
+    private void LateUpdate()
+    {
+        // Anwenden der in change gesetzten Bewegung.
+        float step = roundToPixelGrid(1f * Time.deltaTime);
+        Vector3 oldPos = transform.position;
+        transform.position += change * step;
+        if (isColliding()) transform.position = oldPos;
+        change = Vector3.zero;
     }
 }
