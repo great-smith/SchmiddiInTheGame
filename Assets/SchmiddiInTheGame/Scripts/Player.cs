@@ -20,8 +20,18 @@ public class Player : MonoBehaviour {
             change.y = step;
         else if (Input.GetKey(KeyCode.S))
             change.y = -step;
+
+        Vector3 oldPos = transform.position;
         transform.position += change;
+        if (isColliding()) transform.position = oldPos;
 	}
+
+    private bool isColliding()
+    {
+        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+        Collider2D[] colliders = new Collider2D[10];
+        return boxCollider.OverlapCollider(new ContactFilter2D(), colliders) > 0;
+    }
 
     /// <summary>
     /// Größe eines PixelArt-Pixels in Unity-Einheiten.
