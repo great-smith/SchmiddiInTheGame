@@ -34,10 +34,13 @@ public class TheGameObject : MonoBehaviour
     /// </summary>
     private Collider2D[] colliders;
 
+    private Animator anim;
+
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         colliders = new Collider2D[10];
+        anim = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -58,6 +61,14 @@ public class TheGameObject : MonoBehaviour
 
     private void LateUpdate()
     {
+        anim.SetFloat("change_x", change.x);
+        anim.SetFloat("change_y", change.y);
+
+        if (change.y <= -1f) anim.SetFloat("lookAt", 0f);
+        else if (change.x <= -1f) anim.SetFloat("lookAt", 1f);
+        else if (change.y >= 1f) anim.SetFloat("lookAt", 2f);
+        else if (change.x >= 1f) anim.SetFloat("lookAt", 3f);
+
         // Anwenden der in change gesetzten Bewegung.
         float step = roundToPixelGrid(1f * Time.deltaTime);
         Vector3 oldPos = transform.position;
